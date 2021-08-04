@@ -1,0 +1,491 @@
+<!doctype html>
+<html>
+  <head>
+    <title>RESO UPI Service API</title>
+    <style type="text/css">
+      body {
+      	font-family: Trebuchet MS, sans-serif;
+      	font-size: 15px;
+      	color: #444;
+      	margin-right: 24px;
+      }
+      
+      h1	{
+      	font-size: 25px;
+      }
+      h2	{
+      	font-size: 20px;
+      }
+      h3	{
+      	font-size: 16px;
+      	font-weight: bold;
+      }
+      hr	{
+      	height: 1px;
+      	border: 0;
+      	color: #ddd;
+      	background-color: #ddd;
+      }
+      
+      .app-desc {
+        clear: both;
+        margin-left: 20px;
+      }
+      .param-name {
+        width: 100%;
+      }
+      .license-info {
+        margin-left: 20px;
+      }
+      
+      .license-url {
+        margin-left: 20px;
+      }
+      
+      .model {
+        margin: 0 0 0px 20px;
+      }
+      
+      .method {
+        margin-left: 20px;
+      }
+      
+      .method-notes	{
+      	margin: 10px 0 20px 0;
+      	font-size: 90%;
+      	color: #555;
+      }
+      
+      pre {
+        padding: 10px;
+        margin-bottom: 2px;
+      }
+      
+      .http-method {
+       text-transform: uppercase;
+      }
+      
+      pre.get {
+        background-color: #0f6ab4;
+      }
+      
+      pre.post {
+        background-color: #10a54a;
+      }
+      
+      pre.put {
+        background-color: #c5862b;
+      }
+      
+      pre.delete {
+        background-color: #a41e22;
+      }
+      
+      .huge	{
+      	color: #fff;
+      }
+      
+      pre.example {
+        background-color: #f3f3f3;
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+      
+      code {
+        white-space: pre;
+      }
+      
+      .nickname {
+        font-weight: bold;
+      }
+      
+      .method-path {
+        font-size: 1.5em;
+        background-color: #0f6ab4;
+      }
+      
+      .up {
+        float:right;
+      }
+      
+      .parameter {
+        width: 500px;
+      }
+      
+      .param {
+        width: 500px;
+        padding: 10px 0 0 20px;
+        font-weight: bold;
+      }
+      
+      .param-desc {
+        width: 700px;
+        padding: 0 0 0 20px;
+        color: #777;
+      }
+      
+      .param-type {
+        font-style: italic;
+      }
+      
+      .param-enum-header {
+      width: 700px;
+      padding: 0 0 0 60px;
+      color: #777;
+      font-weight: bold;
+      }
+      
+      .param-enum {
+      width: 700px;
+      padding: 0 0 0 80px;
+      color: #777;
+      font-style: italic;
+      }
+      
+      .field-label {
+        padding: 0;
+        margin: 0;
+        clear: both;
+      }
+      
+      .field-items	{
+      	padding: 0 0 15px 0;
+      	margin-bottom: 15px;
+      }
+      
+      .return-type {
+        clear: both;
+        padding-bottom: 10px;
+      }
+      
+      .param-header {
+        font-weight: bold;
+      }
+      
+      .method-tags {
+        text-align: right;
+      }
+      
+      .method-tag {
+        background: none repeat scroll 0% 0% #24A600;
+        border-radius: 3px;
+        padding: 2px 10px;
+        margin: 2px;
+        color: #FFF;
+        display: inline-block;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+  <h1>RESO UPI Service API</h1>
+    <div class="app-desc">This API that can build and parse RESO UPI values.  This is strictly a service API and no infomation is retained or transmitted to third-parties when used.  All of the code is published as an Open Source project.</div>
+    <br/>
+    <div class="app-desc">The API also can  also be used to discover information about states, counties, and towns from text-based hints.  This capability can be useful when constructing parameters for building UPIs.  For example, if you pass the name of a town, the API Server will look for all matches across state, counties, and subcounties and produce a group of results.  Each result has the codes that can then be used to build a UPI.</div>
+    <br/>
+    <div class="app-desc">Contact Info: <a href="mark@lesswing.com">mark@lesswing.com</a></div>
+    <div class="app-desc">Version: 0.9</div>
+    <div class="app-desc">More information: <a href="https://www.reso.org/distributed-ledger-workgroup/">RESO Distributed Ledger Workgroup</a></div>
+<!--
+    <div class="app-desc">BasePath:/mlesswing/event_model_association/1.4</div>
+    <div class="license-info">MIT</div>
+    <div class="license-url">https://www.lesswing.com/papers/mit_license.txt</div>
+-->
+  <h2>Access</h2>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#UPI Methods">UPI Methods</a></h4>
+  <ul>
+  <li><a href="#/upi/build"><code><span class="http-method">post</span> /upi/build</code></a></li>
+  <li><a href="#/upi/discover"><code><span class="http-method">get</span> /upi/discover</code></a></li>
+  <li><a href="#/upi/parse"><code><span class="http-method">post</span> /upi/garse</code></a></li>
+  </ul>
+  <h4><a href="#Operational Methods">Operational Methods</a></h4>
+  <ul>
+  <li><a href="#version"><code><span class="http-method">get</span> /version</code></a></li>
+  </ul>
+
+  <h1><a name="UPI Methods">UPI Methods</a></h1>
+
+  <!-- method -->
+  <div class="method"><a name="/upi/build"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /upi/build</code></pre></div>
+    <div class="method-summary">Build a UPI (<span class="nickname">Build UPI</span>)</div>
+    <div class="method-notes">Build a UPI using six or seven data elements.  The elements are passed as a structure.</div>
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#string">String</a>
+    </div>
+
+    <h3 class="field-label">Consumes</h3>
+    <br/>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request headers</h3>
+    <div class="field-items">
+      <div class="param">x-api-key</div>
+            <div class="param-desc"><span class="param-type">RESO Credential</span> &mdash; UUID of an issued credential</div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#UPI-1">UPI-1</a> </div>
+        <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Six parameter version</div>
+      <div class="param">body <a href="#UPI-2">UPI-2</a> </div>
+        <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Seven parameter version</div>
+     </div>  <!-- field-items -->
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    item created
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+  </div>
+  <hr/>
+  <!-- method -->
+
+  <!-- method -->
+  <div class="method"><a name="/upi/discover"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /upi/discover</code></pre></div>
+    <div class="method-summary">retrieves the running version (<span class="nickname">version</span>)</div>
+    <div class="method-notes">Retrieves build infomation of the API Server that is currently running.  This can be used to valiidate the version of the source code being used by the API Server.</div>
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#UPI-Discovery">UPI-Discovery</a>
+    </div>
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code> build20210317 </code></pre>
+    <br/>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+      <h4 class="field-label">200</h4>
+      search results matching criteria
+      <h4 class="field-label">400</h4>
+      bad input parameter
+        <a href="#"></a>
+
+  </div>
+  <hr/>
+
+  <!-- method -->
+  <div class="method"><a name="/upi/parse"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /upi/parse</code></pre></div>
+    <div class="method-summary">Parse a UPI (<span class="nickname">Parse UPI</span>)</div>
+    <div class="method-notes">Parse a UPI</div>
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#UPI-Detail">UPI-Detail</a>
+    </div>
+
+    <h3 class="field-label">Consumes</h3>
+<br/>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request headers</h3>
+    <div class="field-items">
+      <div class="param">x-api-key</div>
+            <div class="param-desc"><span class="param-type">RESO Credential</span> &mdash; UUID of an issued credential</div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#string">String</a> </div>
+        <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; UPI to parse</div>
+     </div>  <!-- field-items -->
+
+    <h3 class="field-label">Responses</h3>
+      <h4 class="field-label">200</h4>
+    item processed 
+        <a href="#"></a>
+      <h4 class="field-label">400</h4>
+    invalid input, object invalid
+        <a href="#"></a>
+
+  </div>
+  <hr/>
+  <!-- method -->
+
+  <h1><a name="Operational Methods">Operational Methods</a></h1>
+
+  <!-- method -->
+  <div class="method"><a name="version"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /version</code></pre></div>
+    <div class="method-summary">retrieves the running version (<span class="nickname">version</span>)</div>
+    <div class="method-notes">Retrieves build infomation of the API Server that is currently running.  This can be used to valiidate the version of the source code being used by the API Server.</div>
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#string">String</a>
+    </div>
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code> build20210317 </code></pre>
+    <br/>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+      <h4 class="field-label">200</h4>
+      search results matching criteria
+      <h4 class="field-label">400</h4>
+      bad input parameter
+        <a href="#"></a>
+
+  </div>
+  <hr/>
+  <!-- method -->
+
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="Discovery-Hint"><code>Discovery-Hint</code></a></li>
+    <li><a href="#UPI-Detail"><code>UPI-Detail</code></a></li>
+    <li><a href="#UPI-Discovery"><code>UPI-Discovery</code></a></li>
+    <li><a href="#UPI-1"><code>UPI-1</code></a></li>
+    <li><a href="#UPI-2"><code>UPI-2</code></a></li>
+  </ol>
+
+  <div class="model">
+    <h3><a name="Discovery-Hint"><code>Discovery-Hint</code></a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">Level</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: Subcounty</span></div>
+      <div class="param">State</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: NY</span></div>
+      <div class="param">County</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: Montogomery County</span></div>
+      <div class="param">Subcounty</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: Charleston township</span></div>
+    </div>  <!-- field-items -->
+  </div>
+
+  <div class="model">
+    <h3><a name="UPI-Detail"><code>UPI-Detail</code></a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">county_code</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: 013</span></div>
+      <div class="param">county_name</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: Grand Isle County</span></div>
+      <div class="param">country_code</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: US</span></div>
+      <div class="param">fips</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: 50013</span></div>
+      <div class="param">parcel</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: 666777888</span></div>
+      <div class="param">property_type</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: Real Property</span></div>
+      <div class="param">property_type_code</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: R</span></div>
+      <div class="param">state_abbreviation</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: VT</span></div>
+      <div class="param">state_code</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: 50</span></div>
+      <div class="param">state_name</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: Vermont</span></div>
+      <div class="param">subcounty_code</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: 50650</span></div>
+      <div class="param">subcounty_name</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: North Hero town</span></div>
+      <div class="param">subproperty_code</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: N</span></div>
+      <div class="param">subproperty_name</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: N/A</span></div>
+      <div class="param">upie</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: US-50013-50650-666777888-R-N</span></div>
+    </div>  <!-- field-items -->
+  </div>
+    
+  <div class="model">
+    <h3><a name="UPI-Discovery"><code>UPI-Discovery</code></a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">country_code</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: US</span></div>
+      <div class="param">fips_code</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: 50013</span></div>
+      <div class="param">subcounty_code</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: 50650</span></div>
+      <div class="param">hint_description</div><div class="param-desc"><span class="param-type"><a href="#Discovery-Hint">Discovery-Hint</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: {Level=Subcounty, State=NY, County=Montgomery County, Subcounty=Charleston town}</span></div>
+    </div>  <!-- field-items -->
+  </div>
+
+  <div class="model">
+    <h3><a name="UPI-1"><code>UPI-1</code></a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">country</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: US</span></div>
+      <div class="param">fips</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: 50013</span></div>
+      <div class="param">subcounty</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: 50650</span></div>
+      <div class="param">parcel</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: 666777888</span></div>
+      <div class="param">propertyType</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: R</span></div>
+      <div class="param">subproperty</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: N</span></div>
+    </div>  <!-- field-items -->
+  </div>
+
+  <div class="model">
+    <h3><a name="UPI-2"><code>UPI-2</code></a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">country</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> </div>
+        <div class="param-desc"><span class="param-type">example: US</span></div>
+      <div class="param">state</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: VT</span></div>
+      <div class="param">county</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: 013</span></div>
+      <div class="param">subcounty</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: 50650</span></div>
+      <div class="param">parcel</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: 666777888</span></div>
+      <div class="param">propertyType</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: R</span></div>
+      <div class="param">subproperty</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: N</span></div>
+    </div>  <!-- field-items -->
+  </div>
+    
+  </body>
+</html>
