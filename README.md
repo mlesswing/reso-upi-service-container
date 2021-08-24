@@ -168,7 +168,7 @@ that is required is presented in parenthesis::
 
 - Country (US)
 - FIPS Code (50013)
-- Subcounnty Code (50650)
+- Subcounty Code (50650)
 - Parcel Identifier (666777888)
 - Property Type (R)
 - Subproperty(N)
@@ -182,7 +182,7 @@ county identifiers.  These parameters are:
 - Country (US)
 - State Abbreviation (VT)
 - County FIPS Code (013)
-- Subcounnty Code (50650)
+- Subcounty Code (50650)
 - Parcel Identifier (666777888)
 - Property Type (R)
 - Subproperty(N)
