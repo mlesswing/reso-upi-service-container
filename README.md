@@ -1,5 +1,4 @@
 # RESO UPI Service Container 
-### Copyright 2019-2021 Lesswing, LLC. 
 
 ---
 
