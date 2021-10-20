@@ -36,5 +36,23 @@ echo 'Retreiving hints for:' $TARGET_HINT
 curl $API_URL"/"$METHOD"?hint="$TARGET_HINT
 echo ''
  
+echo '---' 
+echo 'Scenario #3: Return geographic hints API Server' 
+echo '---'
+TARGET_HINT="Bernalillo%County"
+echo 'Retreiving hints for:' $TARGET_HINT
+ 
+curl $API_URL"/"$METHOD"?hint="$TARGET_HINT
+echo ''
+ 
+echo '---' 
+echo 'Scenario #4: Return geographic hints API Server' 
+echo '---'
+TARGET_HINT="Grand+Isle+County"
+echo 'Retreiving hints for:' $TARGET_HINT
+ 
+curl $API_URL"/"$METHOD"?hint="$TARGET_HINT
+echo ''
+ 
 echo '' 
 

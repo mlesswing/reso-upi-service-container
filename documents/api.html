@@ -181,7 +181,7 @@
   <h1>RESO UPI Service API</h1>
     <div class="app-desc">This API that can build and parse RESO UPI values.  This is strictly a service API and no infomation is retained or transmitted to third-parties when used.  All of the code is published as an Open Source project.</div>
     <br/>
-    <div class="app-desc">The API also can  also be used to discover information about states, counties, and towns from text-based hints.  This capability can be useful when constructing parameters for building UPIs.  For example, if you pass the name of a town, the API Server will look for all matches across state, counties, and subcounties and produce a group of results.  Each result has the codes that can then be used to build a UPI.</div>
+    <div class="app-desc">The API also can be used to discover information about states, counties, and towns from text-based hints.  This capability can be useful when constructing parameters for building UPIs.  For example, if you pass the name of a town, the API Server will look for all matches across state, counties, and subcounties and produce a group of results.  Each result has the codes that can then be used to build a UPI.</div>
     <br/>
     <div class="app-desc">Contact Info: <a href="mark@lesswing.com">mark@lesswing.com</a></div>
     <div class="app-desc">Version: 0.9</div>
@@ -464,6 +464,8 @@
         <div class="param-desc"><span class="param-type">example: R</span></div>
       <div class="param">subproperty</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
         <div class="param-desc"><span class="param-type">example: N</span></div>
+      <div class="param">reference</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: A listingId such as '377729'</span></div>
     </div>  <!-- field-items -->
   </div>
 
@@ -477,13 +479,15 @@
       <div class="param">county</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
         <div class="param-desc"><span class="param-type">example: 013</span></div>
       <div class="param">subcounty</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-        <div class="param-desc"><span class="param-type">example: 50650</span></div>
+        <div class="param-desc"><span class="param-type">example: North Hero</span></div>
       <div class="param">parcel</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
         <div class="param-desc"><span class="param-type">example: 666777888</span></div>
       <div class="param">propertyType</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
         <div class="param-desc"><span class="param-type">example: R</span></div>
       <div class="param">subproperty</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
         <div class="param-desc"><span class="param-type">example: N</span></div>
+      <div class="param">reference</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-desc"><span class="param-type">example: A listingId such as '377729'</span></div>
     </div>  <!-- field-items -->
   </div>
     

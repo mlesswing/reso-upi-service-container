@@ -20,10 +20,13 @@ echo ' Repository name: '$REPOSITORY_NAME
 echo ' Image name: '$IMAGE_NAME
 echo '' 
 
+echo $(pwd)
+
 docker run --detach \
   --name $IMAGE_NAME \
   --restart=always \
   --publish 8081:8081 \
+  --volume "$(pwd)"/../common:/common \
   $REPOSITORY_NAME/$IMAGE_NAME \
   npm start
 

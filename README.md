@@ -161,31 +161,45 @@ The API is documented in the [API Document](./documents/api.html) file.
 
 ### Build a UPI 
 
-The service can build a UPI from either six or seven pieces of information.  The
-six element version uses the following data items.  Examples of the information
-that is required is presented in parenthesis::
+The service can build a UPI from either six or seven pieces of information. 
 
+Both forms support an additional parameter called `reference` that is intended to be used
+for validation.  It is handled as an opaque parameter that is only meaningful to the 
+originating system; what ever is input is returned.  If the originating system is an MLS, 
+then then reference parmeter could be the `ListingID`.
 
-- Country (US)
-- FIPS Code (50013)
-- Subcounty Code (50650)
-- Parcel Identifier (666777888)
-- Property Type (R)
-- Subproperty(N)
+The six element version is useful for systems that have the codes associated with the inputs.
+The parameters are:
+
+API Field | Example | Description
+:--- | :--- | :---
+country | 'US' | Country
+fips | '50013' | FIPS code
+subcounty | '50650' | County subdivision code
+parcel | '666777888' | Parcel identifier
+propertyType | 'R' | Property type
+subproperty | 'N' | Subproperty
+reference | '9034a1f01686b32c28783e77c7114ff1383dee41ebb9f1a1aafcbacb358591d0' | An opaque identifier 
+&nbsp;
 
 The service uses FIPS information for the U.S, from the 
 [US Census Bureau](https://www.census.gov/library/reference/code-lists/ansi.html).
 
-The seven element version of the API seperates the FIPS code into state and
-county identifiers.  These parameters are:
+The seven element version of the API is designed to be used by MLS systems. Instead of using
+a FIPS code for state and county identifiers, a text description is used.  Also, the contents
+of `City` field is used instead of the subcounty code.  The parameters are:
 
-- Country (US)
-- State Abbreviation (VT)
-- County FIPS Code (013)
-- Subcounty Code (50650)
-- Parcel Identifier (666777888)
-- Property Type (R)
-- Subproperty(N)
+API Field | Example | RESO DD Field 
+:--- | :--- | :---
+country | 'US' | Country 
+state | 'VT' | StateOrProvince 
+county | 'Grand Isle' | CountyOrParish 
+subcounty | 'North Hero' | City 
+parcel | '666777888' | ParcelNumber 
+propertyType | 'R' | Fixed 
+subproperty | 'N' | Fixed 
+reference | '377729' | ListingId 
+&nbsp;
 
 The service uses two letter abbreviations for states and provinces in the US, Canada, 
 and Mexico comes from the 
@@ -200,7 +214,7 @@ The following script demonstrates building a UPI with bot sets of inputs.  Each 
 the `/upi/build` API method:
  
 ```sh
-> ./scripts/build_upi.sh     
+> ./scripts/build_upi.sh
 ============
  RESO UPI Service
 
@@ -209,13 +223,30 @@ the `/upi/build` API method:
 
 Sending to API Server at: http://localhost:8081
 ---
-Scenario #1: parse a upi with seperate state and county
+Scenario #1: Build a upi with seperate state and county
 ---
-{"success":true,"upi":"US-50013-50650-666777888-R-N"}
+{"country":"US","state":"VT","county":"Grand+Isle+County","subcounty":"North+Hero","parcel":"666777888","propertyType":"R","subproperty":"N"}
+{"success":true,"upi":"US-50013-50650-666777888-R-N","reference":"","confidence":"HIGH","notes":""}
 ---
-Scenario #2: parse a upi with fips
+Scenario #2: Build a upi with seperate state and county and no subcounty
 ---
-{"success":true,"upi":"US-50013-50650-666777888-R-N"}
+{"country":"US","state":"VT","county":"Grand+Isle+County","subcounty":"00000","parcel":"666777888","propertyType":"R","subproperty":"N"}
+{"success":true,"upi":"US-50013-00000-666777888-R-N","reference":"","confidence":"LOW","notes":"There are 5 subcounties in this county and none were specified in the request"}
+---
+Scenario #3: Build a upi with seperate state and county and no subcounty where subcounty exists
+---
+{"country":"US","state":"CA","county":"San+Francisco","subcounty":"00000","parcel":"5843020","propertyType":"R","subproperty":"N"}
+{"success":true,"upi":"US-06075-92790-5843020-R-N","reference":"","confidence":"MEDIUM","notes":"The subcounty was not specified, but is being overriden with the county default [San Francisco CCD]."}
+---
+Scenario #4: Build a upi with fips using API short form
+---
+{"success":true,"upi":"US-50013-50650-666777888-R-N","reference":"","confidence":"HIGH","notes":""}
+---
+Scenario #5: Build a upi with seperate state and county and a reference
+---
+{"country":"US","state":"VT","county":"Grand+Isle+County","subcounty":"North+Hero","parcel":"666777888","propertyType":"R","subproperty":"N","reference":"listingid001"}
+{"success":true,"upi":"US-50013-50650-666777888-R-N","reference":"listingid001","confidence":"HIGH","notes":""}
+
 ```
 
 ### Parse a UPI 
